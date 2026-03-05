@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>奶酪与蛆虫 · 完整人物志</title>
+    <title>奶酪与蛆虫 · 人物志</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="characters-data.js"></script>
     <style>
@@ -15,50 +15,34 @@
         .header-subtitle { font-size: 11px; color: #8b7355; margin-top: 2px; }
         .header-nav { display: flex; gap: 10px; }
         .nav-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(139,115,85,0.2); border: 1px solid rgba(139,115,85,0.4); color: #f4e8d0; font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .nav-btn.active { background: #8b7355; }
-        .container { height: 100vh; padding-top: 70px; position: relative; }
-        .view { display: none; height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-        .view.active { display: block; }
-        .cards-slider { display: flex; height: calc(100vh - 70px); overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 100px; }
-        .cards-slider::-webkit-scrollbar { display: none; }
-        .card { min-width: 100vw; max-width: 100vw; height: 100%; scroll-snap-align: start; padding: 20px; display: flex; flex-direction: column; }
-        .card-inner { background: var(--card-bg); border-radius: 12px; padding: 30px 24px; flex: 1; position: relative; box-shadow: 0 0 0 3px var(--text-dark), 0 0 0 6px var(--accent-color, #8b7355), 0 20px 60px rgba(0,0,0,0.5); overflow-y: auto; -webkit-overflow-scrolling: touch; }
-        .card-id { position: absolute; top: 16px; left: 16px; background: var(--accent-color, #8b7355); color: #f4e8d0; font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 20px; letter-spacing: 1px; }
-        .card-chapter { position: absolute; top: 16px; right: 16px; background: rgba(139,115,85,0.15); color: var(--text-muted); font-size: 11px; padding: 6px 12px; border-radius: 20px; }
-        .name-section { text-align: center; padding: 45px 0 25px; margin-bottom: 20px; border-bottom: 1px solid rgba(139,115,85,0.3); position: relative; }
-        .name-section::after { content: "❧"; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); background: #faf6ed; padding: 0 15px; color: var(--accent-color, #8b7355); font-size: 14px; }
-        .main-name { font-family: 'Cinzel', serif; font-size: 32px; font-weight: 700; color: var(--text-dark); letter-spacing: 2px; line-height: 1.3; margin-bottom: 8px; }
-        .nick-name { font-size: 15px; color: var(--text-muted); font-style: italic; }
-        /* Role Badge - Separate Visual Element */
-        .role-badge { display: inline-block; margin-top: 12px; background: rgba(139,115,85,0.15); color: var(--accent-color, #8b7355); font-size: 13px; font-weight: 600; padding: 6px 16px; border-radius: 20px; border: 1px solid rgba(139,115,85,0.3); }
-        .section { margin-bottom: 20px; }
-        .section-title { font-family: 'Cinzel', serif; font-size: 11px; color: var(--accent-color, #8b7355); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        .section-title::before { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--accent-color, #8b7355)); opacity: 0.4; }
-        .section-content { font-size: 16px; line-height: 1.75; color: var(--text-dark); text-align: justify; }
-        .list-view { padding: 20px; padding-bottom: 80px; }
-        .list-stats { background: rgba(139,115,85,0.1); border: 1px solid rgba(139,115,85,0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .container { height: 100vh; padding-top: 70px; position: relative; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        
+        /* Stats Section */
+        .list-stats { background: rgba(139,115,85,0.1); border: 1px solid rgba(139,115,85,0.3); border-radius: 12px; padding: 20px; margin: 20px; }
         .list-stats h3 { color: #f4e8d0; font-size: 16px; margin-bottom: 12px; font-family: 'Cinzel', serif; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .stat-item { background: rgba(139,115,85,0.15); padding: 10px; border-radius: 8px; text-align: center; }
-        .stat-number { font-size: 22px; font-weight: 700; color: #8b7355; font-family: 'Cinzel', serif; }
+        .stat-item { background: rgba(139,115,85,0.15); padding: 12px 8px; border-radius: 8px; text-align: center; }
+        .stat-number { font-size: 20px; font-weight: 700; color: #8b7355; font-family: 'Cinzel', serif; }
         .stat-label { font-size: 10px; color: rgba(244,232,208,0.6); margin-top: 4px; }
-        .category-filter { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px; scrollbar-width: none; }
+        
+        /* Category Filter */
+        .category-filter { display: flex; gap: 8px; overflow-x: auto; padding: 0 20px 15px; scrollbar-width: none; }
         .category-filter::-webkit-scrollbar { display: none; }
         .filter-btn { flex-shrink: 0; padding: 8px 14px; background: rgba(139,115,85,0.2); border: 1px solid rgba(139,115,85,0.4); border-radius: 20px; color: #f4e8d0; font-size: 12px; cursor: pointer; white-space: nowrap; }
         .filter-btn.active { background: #8b7355; border-color: #8b7355; }
-        .character-list { display: flex; flex-direction: column; gap: 12px; }
+        
+        /* Character List */
+        .character-list { display: flex; flex-direction: column; gap: 12px; padding: 0 20px 100px; }
         .list-item { background: rgba(250,246,237,0.95); border-radius: 12px; padding: 16px; cursor: pointer; transition: transform 0.2s; }
         .list-item:active { transform: scale(0.98); }
         .list-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-        .list-item-name { font-size: 17px; font-weight: 600; color: var(--text-dark); }
-        .list-item-role { display: inline-block; background: rgba(139,115,85,0.12); color: #8b7355; font-size: 11px; padding: 3px 10px; border-radius: 12px; margin-top: 6px; }
-        .list-item-desc { font-size: 13px; color: var(--text-dark); line-height: 1.6; opacity: 0.85; margin-top: 10px; }
-        .list-item-chapter { font-size: 11px; color: #8b7355; margin-top: 8px; }
-        .page-indicator { position: fixed; bottom: max(30px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 100; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(139,115,85,0.3); transition: all 0.3s ease; }
-        .dot.active { background: #f4e8d0; width: 24px; border-radius: 4px; }
-        .swipe-hint { position: fixed; bottom: max(70px, calc(env(safe-area-inset-bottom) + 40px)); left: 50%; transform: translateX(-50%); color: rgba(244,232,208,0.4); font-size: 12px; display: flex; align-items: center; gap: 8px; animation: pulse 2s infinite; pointer-events: none; }
-        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+        .list-item-name { font-size: 18px; font-weight: 600; color: var(--text-dark); }
+        .list-item-id { font-family: 'Cinzel', serif; font-size: 11px; color: #8b7355; background: rgba(139,115,85,0.1); padding: 3px 8px; border-radius: 10px; }
+        .list-item-role { display: inline-block; background: rgba(139,115,85,0.12); color: #8b7355; font-size: 12px; padding: 4px 12px; border-radius: 12px; margin-top: 6px; }
+        .list-item-desc { font-size: 14px; color: var(--text-dark); line-height: 1.6; opacity: 0.9; margin-top: 10px; }
+        .list-item-chapter { font-size: 11px; color: #8b7355; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(139,115,85,0.15); }
+        
+        /* Search Panel */
         .search-panel { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,21,16,0.98); z-index: 200; padding: 80px 20px 20px; transform: translateY(-100%); transition: transform 0.3s ease; overflow-y: auto; }
         .search-panel.open { transform: translateY(0); }
         .search-input { width: 100%; padding: 15px 20px; border: 1px solid rgba(139,115,85,0.4); border-radius: 8px; background: rgba(139,115,85,0.1); color: #f4e8d0; font-size: 16px; font-family: 'Noto Serif SC', serif; margin-bottom: 20px; }
@@ -70,11 +54,9 @@
     <div class="header">
         <div>
             <div class="header-title">奶酪与蛆虫</div>
-            <div class="header-subtitle" id="headerSubtitle">人物志 · 74位角色</div>
+            <div class="header-subtitle">人物志 · 74位角色</div>
         </div>
         <div class="header-nav">
-            <div class="nav-btn active" onclick="switchView('cards')" title="卡片">📇</div>
-            <div class="nav-btn" onclick="switchView('list')" title="列表">📋</div>
             <div class="nav-btn" onclick="toggleSearch()" title="搜索">🔍</div>
         </div>
     </div>
@@ -82,180 +64,79 @@
     <div class="search-panel" id="searchPanel">
         <div class="close-search" onclick="toggleSearch()">✕</div>
         <input type="text" class="search-input" placeholder="搜索姓名、身份或章节..." id="searchInput" oninput="handleSearch()">
-        <div id="searchResults"></div>
+        <div class="character-list" id="searchResults"></div>
     </div>
     
-    <div class="container">
-        <div class="view active" id="cardsView">
-            <div class="cards-slider" id="cardsSlider"></div>
-        </div>
-        
-        <div class="view" id="listView">
-            <div class="list-view">
-                <div class="list-stats">
-                    <h3>📊 人物统计</h3>
-                    <div class="stats-grid">
-                        <div class="stat-item"><div class="stat-number">8</div><div class="stat-label">核心人物</div></div>
-                        <div class="stat-item"><div class="stat-number">12</div><div class="stat-label">宗教权威</div></div>
-                        <div class="stat-item"><div class="stat-number">15</div><div class="stat-label">证人/村民</div></div>
-                        <div class="stat-item"><div class="stat-number">19</div><div class="stat-label">思想家</div></div>
-                        <div class="stat-item"><div class="stat-number">12</div><div class="stat-label">圣经人物</div></div>
-                        <div class="stat-item"><div class="stat-number">8</div><div class="stat-label">学者</div></div>
-                    </div>
-                </div>
-                <div class="category-filter" id="categoryFilter">
-                    <div class="filter-btn active" onclick="filterList('all')">全部(74)</div>
-                    <div class="filter-btn" onclick="filterList('核心')">核心</div>
-                    <div class="filter-btn" onclick="filterList('宗教权威')">宗教权威</div>
-                    <div class="filter-btn" onclick="filterList('证人')">证人/村民</div>
-                    <div class="filter-btn" onclick="filterList('思想家')">思想家</div>
-                    <div class="filter-btn" onclick="filterList('圣经人物')">圣经人物</div>
-                    <div class="filter-btn" onclick="filterList('学者')">学者</div>
-                </div>
-                <div class="character-list" id="characterList"></div>
+    <div class="container" id="mainContainer">
+        <div class="list-stats">
+            <h3>📊 人物统计</h3>
+            <div class="stats-grid">
+                <div class="stat-item"><div class="stat-number">8</div><div class="stat-label">核心人物</div></div>
+                <div class="stat-item"><div class="stat-number">12</div><div class="stat-label">宗教权威</div></div>
+                <div class="stat-item"><div class="stat-number">15</div><div class="stat-label">证人/村民</div></div>
+                <div class="stat-item"><div class="stat-number">19</div><div class="stat-label">思想家</div></div>
+                <div class="stat-item"><div class="stat-number">12</div><div class="stat-label">圣经人物</div></div>
+                <div class="stat-item"><div class="stat-number">8</div><div class="stat-label">学者</div></div>
             </div>
         </div>
+        
+        <div class="category-filter" id="categoryFilter">
+            <div class="filter-btn active" onclick="filterList('all')">全部(74)</div>
+            <div class="filter-btn" onclick="filterList('核心')">核心</div>
+            <div class="filter-btn" onclick="filterList('宗教权威')">宗教权威</div>
+            <div class="filter-btn" onclick="filterList('证人')">证人/村民</div>
+            <div class="filter-btn" onclick="filterList('思想家')">思想家</div>
+            <div class="filter-btn" onclick="filterList('圣经人物')">圣经人物</div>
+            <div class="filter-btn" onclick="filterList('学者')">学者</div>
+        </div>
+        
+        <div class="character-list" id="characterList"></div>
     </div>
-    
-    <div class="page-indicator" id="pageIndicator"></div>
-    <div class="swipe-hint" id="swipeHint"><span>←</span> 左右滑动切换 <span>→</span></div>
 
     <script>
         const accentColors = { '核心': '#8b7355', '宗教权威': '#5a6b7b', '证人': '#7a6a5a', '思想家': '#7b5a6a', '圣经人物': '#6a7b5a', '学者': '#8f7b6b' };
-        let currentView = 'cards', currentCardIndex = 0;
+        let currentFilter = 'all';
         
-        // Use all 74 characters
-        const displayCharacters = allCharacters;
+        function init() { generateList(); }
         
-        function init() { generateCards(); generateList(); setupScrollHandler(); }
-        
-        function generateCards() {
-            const slider = document.getElementById('cardsSlider'), indicator = document.getElementById('pageIndicator');
-            const mainChars = displayCharacters.filter(c => c.isCard || parseInt(c.id) <= 10);
+        function generateList(filter = 'all', containerId = 'characterList') {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
             
-            mainChars.forEach((char, index) => {
-                const accentColor = accentColors[char.category] || '#8b7355';
-                // Only show role badge if role exists and is not '-'
-                const roleBadge = char.role && char.role !== '-' ? `<div class="role-badge">${char.role}</div>` : '';
-                
-                const card = document.createElement('div'); card.className = 'card';
-                card.innerHTML = `<div class="card-inner" style="--accent-color: ${accentColor}">
-                    <div class="card-id">${char.id}</div>
-                    <div class="card-chapter">${char.chapter}</div>
-                    <div class="name-section">
-                        <div class="main-name">${char.name}</div>
-                        <div class="nick-name">${char.nameIt}</div>
-                        ${roleBadge}
-                    </div>
-                    <div class="section">
-                        <div class="section-title">简介</div>
-                        <div class="section-content">${char.desc}</div>
-                    </div>
-                </div>`;
-                slider.appendChild(card);
-                
-                const dot = document.createElement('div');
-                dot.className = 'dot' + (index === 0 ? ' active' : '');
-                indicator.appendChild(dot);
-            });
-        }
-        
-        function generateList(filter = 'all') {
-            const list = document.getElementById('characterList');
-            list.innerHTML = '';
-            
-            const filtered = filter === 'all' ? displayCharacters : displayCharacters.filter(c => c.category === filter);
+            const filtered = filter === 'all' ? allCharacters : allCharacters.filter(c => c.category === filter);
             
             filtered.forEach(char => {
                 const item = document.createElement('div');
                 item.className = 'list-item';
-                item.onclick = () => {
-                    if (char.isCard || parseInt(char.id) <= 10) {
-                        const cardIndex = displayCharacters.filter(c => c.isCard || parseInt(c.id) <= 10).findIndex(c => c.id === char.id);
-                        if (cardIndex >= 0) {
-                            switchView('cards');
-                            goToCard(cardIndex);
-                        }
-                    }
-                };
                 
-                // Only show role if it exists and is not '-'
                 const roleHtml = char.role && char.role !== '-' ? `<div class="list-item-role">${char.role}</div>` : '';
                 
                 item.innerHTML = `
                     <div class="list-item-header">
-                        <div>
-                            <div class="list-item-name">${char.name}</div>
-                            ${roleHtml}
-                        </div>
+                        <div class="list-item-name">${char.name}</div>
+                        <div class="list-item-id">#${char.id}</div>
                     </div>
+                    ${roleHtml}
                     <div class="list-item-desc">${char.desc}</div>
                     <div class="list-item-chapter">📖 ${char.chapter} · ${char.category}</div>`;
-                list.appendChild(item);
+                container.appendChild(item);
             });
-        }
-        
-        function switchView(view) {
-            currentView = view;
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById(view + 'View').classList.add('active');
-            
-            document.querySelectorAll('.nav-btn').forEach((btn, i) => {
-                btn.classList.toggle('active', (view === 'cards' && i === 0) || (view === 'list' && i === 1));
-            });
-            
-            const indicator = document.getElementById('pageIndicator');
-            const swipeHint = document.getElementById('swipeHint');
-            
-            if (view === 'cards') {
-                indicator.style.display = 'flex';
-                swipeHint.style.display = 'flex';
-                document.getElementById('headerSubtitle').textContent = '人物志 · 10位关键角色';
-            } else {
-                indicator.style.display = 'none';
-                swipeHint.style.display = 'none';
-                document.getElementById('headerSubtitle').textContent = '完整人物表 · 74位角色';
-            }
         }
         
         function filterList(category) {
+            currentFilter = category;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             generateList(category);
         }
         
-        function goToCard(index) {
-            currentCardIndex = index;
-            document.getElementById('cardsSlider').scrollTo({
-                left: index * window.innerWidth,
-                behavior: 'smooth'
-            });
-            updateIndicators();
-        }
-        
-        function updateIndicators() {
-            document.querySelectorAll('.dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentCardIndex);
-            });
-        }
-        
-        function setupScrollHandler() {
-            document.getElementById('cardsSlider').addEventListener('scroll', () => {
-                const newIndex = Math.round(document.getElementById('cardsSlider').scrollLeft / window.innerWidth);
-                if (newIndex !== currentCardIndex) {
-                    currentCardIndex = newIndex;
-                    updateIndicators();
-                    if (currentCardIndex > 0) {
-                        document.getElementById('swipeHint').style.display = 'none';
-                    }
-                }
-            });
-        }
-        
         function toggleSearch() {
-            document.getElementById('searchPanel').classList.toggle('open');
-            if (document.getElementById('searchPanel').classList.contains('open')) {
+            const panel = document.getElementById('searchPanel');
+            panel.classList.toggle('open');
+            if (panel.classList.contains('open')) {
                 document.getElementById('searchInput').focus();
+                document.getElementById('searchInput').value = '';
+                document.getElementById('searchResults').innerHTML = '';
             }
         }
         
@@ -264,35 +145,34 @@
             const results = document.getElementById('searchResults');
             results.innerHTML = '';
             
-            if (query.length < 2) return;
+            if (query.length < 1) return;
             
-            displayCharacters.filter(c => 
+            const matches = allCharacters.filter(c => 
                 c.name.toLowerCase().includes(query) ||
                 c.nameIt.toLowerCase().includes(query) ||
                 (c.role && c.role.toLowerCase().includes(query)) ||
                 c.desc.toLowerCase().includes(query) ||
-                c.chapter.toLowerCase().includes(query)
-            ).forEach(char => {
+                c.chapter.toLowerCase().includes(query) ||
+                c.category.includes(query)
+            );
+            
+            if (matches.length === 0) {
+                results.innerHTML = '<div style="color: rgba(244,232,208,0.5); text-align: center; padding: 40px;">未找到匹配结果</div>';
+                return;
+            }
+            
+            matches.forEach(char => {
                 const item = document.createElement('div');
                 item.className = 'list-item';
-                item.style.marginBottom = '10px';
-                item.onclick = () => {
-                    if (char.isCard || parseInt(char.id) <= 10) {
-                        const cardIndex = displayCharacters.filter(c => c.isCard || parseInt(c.id) <= 10).findIndex(c => c.id === char.id);
-                        if (cardIndex >= 0) {
-                            switchView('cards');
-                            goToCard(cardIndex);
-                            toggleSearch();
-                        }
-                    }
-                };
                 const roleHtml = char.role && char.role !== '-' ? `<div class="list-item-role">${char.role}</div>` : '';
                 item.innerHTML = `
                     <div class="list-item-header">
                         <div class="list-item-name">${char.name}</div>
+                        <div class="list-item-id">#${char.id}</div>
                     </div>
                     ${roleHtml}
-                    <div class="list-item-desc">${char.desc}</div>`;
+                    <div class="list-item-desc">${char.desc}</div>
+                    <div class="list-item-chapter">📖 ${char.chapter} · ${char.category}</div>`;
                 results.appendChild(item);
             });
         }
