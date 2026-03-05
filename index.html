@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>奶酪与蛆虫 · 人物志</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -93,6 +93,7 @@
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+            padding-bottom: 120px; /* Add space for bottom nav */
         }
         
         .cards-slider::-webkit-scrollbar {
@@ -242,7 +243,7 @@
         /* Page Indicator */
         .page-indicator {
             position: fixed;
-            bottom: 20px;
+            bottom: max(90px, calc(env(safe-area-inset-bottom) + 70px));
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -351,7 +352,7 @@
         /* Quick Nav */
         .quick-nav {
             position: fixed;
-            bottom: 60px;
+            bottom: max(20px, env(safe-area-inset-bottom));
             left: 50%;
             transform: translateX(-50%);
             background: rgba(26,21,16,0.9);
@@ -362,6 +363,7 @@
             gap: 8px;
             z-index: 90;
             backdrop-filter: blur(10px);
+            margin-bottom: env(safe-area-inset-bottom);
         }
         
         .quick-nav-btn {
@@ -385,7 +387,7 @@
         /* Swipe Hint */
         .swipe-hint {
             position: fixed;
-            bottom: 100px;
+            bottom: max(130px, calc(env(safe-area-inset-bottom) + 110px));
             left: 50%;
             transform: translateX(-50%);
             color: rgba(244,232,208,0.4);
