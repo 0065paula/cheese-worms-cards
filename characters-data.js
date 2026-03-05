@@ -60,7 +60,29 @@ const allCharacters = [
     { id: "51", category: "思想家", name: "亚历山德罗·卡拉维亚", nameIt: "Alessandro Caravia", role: "珠宝匠", desc: "《卡拉维亚之梦》作者，书中通过小丑讽刺教会腐败", chapter: "第10章" },
     { id: "52", category: "思想家", name: "赞博洛", nameIt: "Zanpolo", role: "小丑", desc: "卡拉维亚书中的主人公，其在地狱的经历被梅诺基奥牢记", chapter: "第10章" },
     { id: "53", category: "思想家", name: "吉罗拉莫·加拉泰奥", nameIt: "Girolamo Galateo", role: "隐修士", desc: "传播灵魂沉眠学说的异端", chapter: "第37章" },
-    { id: "54", category: "思想家", name: "安东尼奥·斯科蒂拉罗", nameIt: "Antonio Scottilaro", role: "异端分子", desc: "费利切审判官信件中真正指代的人物，梅诺基奥常与其混淆", chapter: "前言,第62章" }
+    { id: "54", category: "思想家", name: "安东尼奥·斯科蒂拉罗", nameIt: "Antonio Scottilaro", role: "异端分子", desc: "费利切审判官信件中真正指代的人物，梅诺基奥常与其混淆", chapter: "前言,第62章" },
+    
+    // 圣经及神话人物 (12人)
+    { id: "55", category: "圣经人物", name: "耶稣基督", nameIt: "Jesus Christ", role: "救世主", desc: "梅认为他只是一个普通人，因其地位高贵才被称为上帝之子", chapter: "第19,38章" },
+    { id: "56", category: "圣经人物", name: "圣母玛利亚", nameIt: "Virgin Mary", role: "耶稣之母", desc: "梅否认其童贞，认为她只是神殿中众多处女之一", chapter: "第18,89,90章" },
+    { id: "57", category: "圣经人物", name: "圣约瑟", nameIt: "Saint Joseph", role: "耶稣养父", desc: "梅认为他是耶稣真正的亲生父亲", chapter: "第87,90章" },
+    { id: "58", category: "圣经人物", name: "亚伯拉罕", nameIt: "Abraham", role: "犹太教先祖", desc: "被梅视为推翻偶像、唯独崇拜上帝的典范", chapter: "第38,82,91章" },
+    { id: "59", category: "圣经人物", name: "约瑟(雅各之子)", nameIt: "Joseph", role: "圣经人物", desc: "梅在求情信中将自己比作受难且能预知的约瑟", chapter: "第92,93章" },
+    { id: "60", category: "圣经人物", name: "路西法", nameIt: "Lucifer", role: "天使", desc: "梅宇宙论中与上帝一同从奶酪中生出的四位'队长'之一", chapter: "第87,94,95章" },
+    { id: "61", category: "圣经人物", name: "米迦勒", nameIt: "Michael", role: "天使", desc: "梅宇宙论中与上帝一同从奶酪中生出的四位'队长'之一", chapter: "第87,94,95章" },
+    { id: "62", category: "圣经人物", name: "加百列", nameIt: "Gabriel", role: "天使", desc: "梅宇宙论中与上帝一同从奶酪中生出的四位'队长'之一", chapter: "第87,94,95章" },
+    { id: "63", category: "圣经人物", name: "拉斐尔", nameIt: "Raphael", role: "天使", desc: "梅宇宙论中与上帝一同从奶酪中生出的四位'队长'之一", chapter: "第87,94,95章" },
+    { id: "64", category: "圣经人物", name: "亚当", nameIt: "Adam", role: "人类始祖", desc: "梅认为人类被造是为了填补堕落天使留下的空位", chapter: "第75,87,96章" },
+    { id: "65", category: "圣经人物", name: "夏娃", nameIt: "Eve", role: "人类始祖", desc: "梅认为人类被造是为了填补堕落天使留下的空位", chapter: "第75,87,96章" },
+    { id: "66", category: "圣经人物", name: "圣克里斯托弗", nameIt: "Saint Christopher", role: "圣人", desc: "梅戏称他比上帝还伟大，因为他背负世界", chapter: "第48章" },
+    
+    // 近现代学者与评论家 (8人)
+    { id: "67", category: "学者", name: "卡洛·金茨堡", nameIt: "Carlo Ginzburg", role: "历史学家", desc: "本书作者，微观史学奠基人", chapter: "封面及序言" },
+    { id: "68", category: "学者", name: "安德里亚·德尔·科尔", nameIt: "Andrea Del Col", role: "历史学家", desc: "梅诺基奥审判记录的编辑者，与金茨堡有学术分歧", chapter: "序言及注释" },
+    { id: "69", category: "学者", name: "约翰/安妮·泰代斯基", nameIt: "John/Anne Tedeschi", role: "译者、历史学家", desc: "本书英译者，对梅诺基奥研究有贡献", chapter: "译者序" },
+    { id: "70", category: "学者", name: "米哈伊尔·巴赫金", nameIt: "Mikhail Bakhtin", role: "文学理论家", desc: "提出了'文化循环论'，金茨堡借用其理论分析大众文化", chapter: "意大利文版前言" },
+    { id: "71", category: "学者", name: "米歇尔·福柯", nameIt: "Michel Foucault", role: "哲学家、历史学家", desc: "探讨知识考古学。金茨堡通过梅诺基奥对其方法论提出不同见解", chapter: "意大利文版前言" },
+    { id: "72", category: "学者", name: "娜塔莉·泽蒙·戴维斯", nameIt: "Natalie Zemon Davis", role: "历史学家", desc: "微观史学代表人物，常被拿来与金茨堡比较", chapter: "附录及评论" },
+    { id: "73", category: "学者", name: "吕西安·费弗尔", nameIt: "Lucien Febvre", role: "历史学家", desc: "年鉴学派创始人。金茨堡对其关于16世纪'无信仰'的结论有保留地借鉴", chapter: "意大利文版前言" },
+    { id: "74", category: "学者", name: "埃马纽埃尔·勒华拉杜里", nameIt: "Emmanuel Le Roy Ladurie", role: "历史学家", desc: "《蒙塔尤》作者。其方法论与金茨堡形成呼应", chapter: "意大利文版前言" }
 ];
-
-// Bible figures and scholars data can be added similarly
