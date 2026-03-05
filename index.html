@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>奶酪与蛆虫 · 人物志</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        :root {
+            --bg-color: #1a1510;
+            --card-bg: linear-gradient(135deg, #faf6ed 0%, #f4e8d0 50%, #ede4d0 100%);
+            --text-dark: #3d3228;
+            --text-muted: #6b5a4a;
+            --accent-gold: #8b7355;
+            --accent-blue: #5a6b7b;
+            --accent-brown: #6b5a4d;
+            --accent-green: #6a7b5a;
+            --accent-purple: #7b5a6a;
+            --accent-red: #8f6b6b;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: var(--bg-color);
+            color: var(--text-dark);
+            overflow: hidden;
+            touch-action: pan-y;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: linear-gradient(180deg, rgba(26,21,16,0.95) 0%, rgba(26,21,16,0.8) 100%);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(139,115,85,0.3);
+        }
+        
+        .header-title {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            color: #f4e8d0;
+            letter-spacing: 2px;
+        }
+        
+        .header-subtitle {
+            font-size: 11px;
+            color: #8b7355;
+            margin-top: 2px;
+        }
+        
+        .search-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(139,115,85,0.2);
+            border: 1px solid rgba(139,115,85,0.4);
+            color: #f4e8d0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        /* Main Container */
+        .container {
+            height: 100vh;
+            padding-top: 70px;
+            position: relative;
+        }
+        
+        /* Cards Slider */
+        .cards-slider {
+            display: flex;
+            height: calc(100vh - 70px);
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        
+        .cards-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Individual Card */
+        .card {
+            min-width: 100vw;
+            max-width: 100vw;
+            height: 100%;
+            scroll-snap-align: start;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-inner {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px 24px;
+            flex: 1;
+            position: relative;
+            box-shadow: 
+                0 0 0 3px var(--text-dark),
+                0 0 0 6px var(--accent-color, #8b7355),
+                0 20px 60px rgba(0,0,0,0.5);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Card ID Badge */
+        .card-id {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: var(--accent-color, #8b7355);
+            color: #f4e8d0;
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .card-chapter {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(139,115,85,0.15);
+            color: var(--text-muted);
+            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        
+        /* Name Section */
+        .name-section {
+            text-align: center;
+            padding: 50px 0 30px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(139,115,85,0.3);
+            position: relative;
+        }
+        
+        .name-section::after {
+            content: "❧";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #faf6ed;
+            padding: 0 15px;
+            color: var(--accent-color, #8b7355);
+            font-size: 14px;
+        }
+        
+        .main-name {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: 2px;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+        
+        .nick-name {
+            font-size: 15px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        
+        .memory-code {
+            display: inline-block;
+            margin-top: 12px;
+            background: var(--accent-color, #8b7355);
+            color: #f4e8d0;
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 4px;
+            letter-spacing: 2px;
+        }
+        
+        /* Content Sections */
+        .section {
+            margin-bottom: 24px;
+        }
+        
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            color: var(--accent-color, #8b7355);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title::before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-color, #8b7355));
+            opacity: 0.4;
+        }
+        
+        .section-content {
+            font-size: 16px;
+            line-height: 1.75;
+            color: var(--text-dark);
+            text-align: justify;
+        }
+        
+        .deeds {
+            background: rgba(139,115,85,0.08);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color, #8b7355);
+        }
+        
+        /* Page Indicator */
+        .page-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(139,115,85,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #f4e8d0;
+            width: 24px;
+            border-radius: 4px;
+        }
+        
+        /* Search Panel */
+        .search-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26,21,16,0.98);
+            z-index: 200;
+            padding: 80px 20px 20px;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .search-panel.open {
+            transform: translateY(0);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid rgba(139,115,85,0.4);
+            border-radius: 8px;
+            background: rgba(139,115,85,0.1);
+            color: #f4e8d0;
+            font-size: 16px;
+            font-family: 'Noto Serif SC', serif;
+            margin-bottom: 20px;
+        }
+        
+        .search-input::placeholder {
+            color: rgba(244,232,208,0.5);
+        }
+        
+        .search-results {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .search-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(139,115,85,0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .search-item:hover {
+            background: rgba(139,115,85,0.2);
+        }
+        
+        .search-item-id {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            color: #8b7355;
+            min-width: 50px;
+        }
+        
+        .search-item-name {
+            font-size: 16px;
+            color: #f4e8d0;
+        }
+        
+        .close-search {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(139,115,85,0.2);
+            border: 1px solid rgba(139,115,85,0.4);
+            color: #f4e8d0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        /* Quick Nav */
+        .quick-nav {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26,21,16,0.9);
+            border: 1px solid rgba(139,115,85,0.3);
+            border-radius: 25px;
+            padding: 8px 16px;
+            display: flex;
+            gap: 8px;
+            z-index: 90;
+            backdrop-filter: blur(10px);
+        }
+        
+        .quick-nav-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid rgba(139,115,85,0.3);
+            color: #f4e8d0;
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quick-nav-btn.active {
+            background: var(--accent-color, #8b7355);
+            border-color: var(--accent-color, #8b7355);
+        }
+        
+        /* Swipe Hint */
+        .swipe-hint {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(244,232,208,0.4);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Hide scrollbar but keep functionality */
+        .card-inner::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div>
+            <div class="header-title">奶酪与蛆虫</div>
+            <div class="header-subtitle">人物志 · 10位关键角色</div>
+        </div>
+        <div class="search-btn" onclick="toggleSearch()">🔍</div>
+    </div>
+    
+    <!-- Search Panel -->
+    <div class="search-panel" id="searchPanel">
+        <div class="close-search" onclick="toggleSearch()">✕</div>
+        <input type="text" class="search-input" placeholder="搜索姓名、编号或关键词..." id="searchInput" oninput="handleSearch()">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <div class="cards-slider" id="cardsSlider">
+            <!-- Cards will be generated by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Page Indicator -->
+    <div class="page-indicator" id="pageIndicator"></div>
+    
+    <!-- Quick Nav -->
+    <div class="quick-nav" id="quickNav"></div>
+    
+    <!-- Swipe Hint -->
+    <div class="swipe-hint" id="swipeHint">
+        <span>←</span> 左右滑动切换 <span>→</span>
+    </div>
+
+    <script>
+        // Character Data with Memory Codes
+        const characters = [
+            {
+                id: "01-M",
+                code: "M",
+                codeMeaning: "Menocchio 主角",
+                chapter: "第 1 章",
+                mainName: "多梅尼科·斯坎代拉",
+                nickName: "MENOCCHIO — 梅诺基奥",
+                identity: "16世纪意大利弗留利地区蒙特雷阿莱村的磨坊主。全书主角，因表达异端思想被宗教法庭审判并处决。他构建了独特的宇宙起源论（奶酪与蛆虫理论）。",
+                deeds: "因散布异端观点在1584年和1599年两次受审。尽管曾宣誓弃绝异端并服刑，但始终坚持自己的思想，最终被教皇克莱门特八世下令处以火刑。",
+                accentColor: "#8b7355"
+            },
+            {
+                id: "02-P",
+                code: "P",
+                codeMeaning: "Prosecutor 检察官",
+                chapter: "第 1 章",
+                mainName: "詹巴蒂斯塔·马罗",
+                nickName: "MARO — 马罗",
+                identity: "阿奎莱亚和康科迪亚地区宗教法庭的副庭长、咏祷司铎、教会法和罗马法博士。他是梅诺基奥第一次审判的主审官之一。",
+                deeds: "在1584年的初审中多次讯问梅诺基奥，试图通过逻辑分析揭露其言语中的自相矛盾，特别是在灵魂不死和上帝本质的问题上穷追不舍。",
+                accentColor: "#5a6b7b"
+            },
+            {
+                id: "03-G",
+                code: "G",
+                codeMeaning: "Guilty 告发者",
+                chapter: "第 2 章",
+                mainName: "奥多里科·乌莱",
+                nickName: "DON ODORICO — 唐·奥多里科",
+                identity: "蒙特雷阿莱的教区神父。梅诺基奥的对头。",
+                deeds: "他是最初向宗教法庭告发梅诺基奥的人。据研究，他曾追求梅诺基奥的女儿遭拒，随后出于报复心理告发了梅诺基奥。第一次审判后，他遭到梅诺基奥亲友的袭击并被迫离开。",
+                accentColor: "#6b5a4d"
+            },
+            {
+                id: "04-J",
+                code: "J",
+                codeMeaning: "Judge 法官",
+                chapter: "第 2 章",
+                mainName: "费利切·达·蒙特法尔科",
+                nickName: "PADRE FELICE — 费利切神父",
+                identity: "方济各会教士，阿奎莱亚和康科迪亚地区的宗教法庭庭长。",
+                deeds: "1584年2月4日，他下令将梅诺基奥逮捕并押送至康科迪亚监狱，主持了对梅诺基奥的早期审讯。",
+                accentColor: "#7a6a5a"
+            },
+            {
+                id: "05-S",
+                code: "S",
+                codeMeaning: "Son 儿子",
+                chapter: "第 4 章",
+                mainName: "齐安诺托·斯坎代拉",
+                nickName: "ZIANOTTO — 齐安诺托",
+                identity: "梅诺基奥的儿子，不识字。",
+                deeds: "在父亲第一次被捕后，他多方奔走，聘请律师、联系证人，并迫使教区神父写信劝导父亲悔过，试图营救父亲。他在梅诺基奥第二次受审前已经去世。",
+                accentColor: "#6a7b5a"
+            },
+            {
+                id: "06-F",
+                code: "F",
+                codeMeaning: "Friend 朋友",
+                chapter: "第 10 章",
+                mainName: "尼古拉·达·波尔恰",
+                nickName: "NICOLA DE MELCHIORI",
+                identity: "波尔恰的画家。梅诺基奥的朋友。",
+                deeds: "他被怀疑是梅诺基奥异端思想的重要来源之一。他曾借给梅诺基奥《十日谈》和《卡拉维亚之梦》等关键书籍。据传他曾亲手打碎教堂里的装饰石板，被视为'大异端分子'。",
+                accentColor: "#7b5a6a"
+            },
+            {
+                id: "07-D",
+                code: "D",
+                codeMeaning: "Disciple 门徒",
+                chapter: "第 41 章",
+                mainName: "梅尔基奥雷·格尔巴",
+                nickName: "MELCHIORE — 梅尔基奥雷",
+                identity: "蒙特雷阿莱的一名不识字的木匠。梅诺基奥在村里唯一的公开追随者。",
+                deeds: "他听信并传播梅诺基奥关于'上帝就是空气'的言论，并在小酒馆亵渎神圣。他因此受到宗教法庭讯问，但在表示悔改并指认受梅诺基奥教唆后获释。",
+                accentColor: "#7a6b5a"
+            },
+            {
+                id: "08-J2",
+                code: "J2",
+                codeMeaning: "Judge 第二次审判法官",
+                chapter: "第 23 章",
+                mainName: "杰罗拉莫·阿斯泰奥",
+                nickName: "PADRE ASTEIO — 阿斯泰奥神父",
+                identity: "方济各会会士，后来成为弗留利地区宗教法庭庭长。",
+                deeds: "他是梅诺基奥1599年第二次审判的主审法官。他在审判中就'三只戒指'的寓言与梅诺基奥展开辩论，并最终主持裁定梅诺基奥为'累犯'。",
+                accentColor: "#5a6b7b"
+            },
+            {
+                id: "09-P2",
+                code: "P2",
+                codeMeaning: "Parallel 平行案例",
+                chapter: "第 59 章",
+                mainName: "佩莱格里诺·巴罗尼",
+                nickName: "PIGGINO — 皮吉诺（肥佬）",
+                identity: "摩德纳亚平宁山脉萨维尼亚诺镇的磨坊主。金茨堡将其作为与梅诺基奥平行的微观史学研究对象。",
+                deeds: "1570年因持有与梅诺基奥极其相似的异端观点（否认地狱、灵魂必有一死、宗教平等）受审。他曾在博洛尼亚贵族家中服务，可能受到过人文主义异端分子卡米洛·雷纳托的影响。",
+                accentColor: "#8f7b6b"
+            },
+            {
+                id: "10-C",
+                code: "C",
+                codeMeaning: "Cardinal 红衣主教",
+                chapter: "第 62 章",
+                mainName: "朱利奥·安东尼奥·桑托罗",
+                nickName: "CARDINALE SAN SEVERINA",
+                identity: "教廷最高宗教法庭的资深成员。",
+                deeds: "在1599年梅诺基奥第二次受审期间，他代表罗马教廷多次致信弗留利审判官，严令必须对梅诺基奥处以极刑，不得延误，体现了反宗教改革时期教会的严厉立场。",
+                accentColor: "#8f6b6b"
+            }
+        ];
+
+        // Generate Cards
+        const slider = document.getElementById('cardsSlider');
+        const indicator = document.getElementById('pageIndicator');
+        const quickNav = document.getElementById('quickNav');
+        
+        characters.forEach((char, index) => {
+            // Create Card
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-inner" style="--accent-color: ${char.accentColor}">
+                    <div class="card-id">${char.id}</div>
+                    <div class="card-chapter">${char.chapter}</div>
+                    
+                    <div class="name-section">
+                        <div class="main-name">${char.mainName}</div>
+                        <div class="nick-name">${char.nickName}</div>
+                        <div class="memory-code">${char.code} = ${char.codeMeaning}</div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">Identity</div>
+                        <div class="section-content">${char.identity}</div>
+                    </div>
+                    
+                    <div class="section deeds">
+                        <div class="section-title">Deeds</div>
+                        <div class="section-content">${char.deeds}</div>
+                    </div>
+                </div>
+            `;
+            slider.appendChild(card);
+            
+            // Create Dot
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (index === 0 ? ' active' : '');
+            indicator.appendChild(dot);
+            
+            // Create Quick Nav Button
+            const btn = document.createElement('button');
+            btn.className = 'quick-nav-btn' + (index === 0 ? ' active' : '');
+            btn.textContent = char.code;
+            btn.onclick = () => goToCard(index);
+            quickNav.appendChild(btn);
+        });
+
+        // Scroll Handler
+        let currentIndex = 0;
+        
+        slider.addEventListener('scroll', () => {
+            const scrollLeft = slider.scrollLeft;
+            const cardWidth = window.innerWidth;
+            const newIndex = Math.round(scrollLeft / cardWidth);
+            
+            if (newIndex !== currentIndex) {
+                currentIndex = newIndex;
+                updateIndicators();
+                
+                // Hide swipe hint after first interaction
+                if (currentIndex > 0) {
+                    document.getElementById('swipeHint').style.display = 'none';
+                }
+            }
+        });
+
+        function updateIndicators() {
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+            
+            // Update quick nav
+            document.querySelectorAll('.quick-nav-btn').forEach((btn, index) => {
+                btn.classList.toggle('active', index === currentIndex);
+                btn.style.setProperty('--accent-color', characters[index].accentColor);
+            });
+        }
+
+        function goToCard(index) {
+            currentIndex = index;
+            slider.scrollTo({
+                left: index * window.innerWidth,
+                behavior: 'smooth'
+            });
+            updateIndicators();
+        }
+
+        // Search Functionality
+        function toggleSearch() {
+            const panel = document.getElementById('searchPanel');
+            panel.classList.toggle('open');
+            if (panel.classList.contains('open')) {
+                document.getElementById('searchInput').focus();
+            }
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = '';
+            
+            if (query.length === 0) return;
+            
+            characters.forEach((char, index) => {
+                if (char.mainName.toLowerCase().includes(query) ||
+                    char.nickName.toLowerCase().includes(query) ||
+                    char.id.toLowerCase().includes(query) ||
+                    char.codeMeaning.toLowerCase().includes(query)) {
+                    
+                    const item = document.createElement('div');
+                    item.className = 'search-item';
+                    item.onclick = () => {
+                        goToCard(index);
+                        toggleSearch();
+                        document.getElementById('searchInput').value = '';
+                    };
+                    item.innerHTML = `
+                        <div class="search-item-id">${char.id}</div>
+                        <div class="search-item-name">${char.mainName}</div>
+                    `;
+                    resultsContainer.appendChild(item);
+                }
+            });
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                goToCard(currentIndex - 1);
+            } else if (e.key === 'ArrowRight' && currentIndex < characters.length - 1) {
+                goToCard(currentIndex + 1);
+            } else if (e.key === 'Escape') {
+                document.getElementById('searchPanel').classList.remove('open');
+            }
+        });
+
+        // Touch Gesture Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+        
+        slider.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentIndex < characters.length - 1) {
+                    // Swipe left - next
+                    goToCard(currentIndex + 1);
+                } else if (diff < 0 && currentIndex > 0) {
+                    // Swipe right - previous
+                    goToCard(currentIndex - 1);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
